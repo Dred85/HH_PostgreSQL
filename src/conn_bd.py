@@ -1,11 +1,12 @@
 import json
 import psycopg2
+from config import database, user, password, host
 
 with psycopg2.connect(
-        host='127.0.0.1',
-        database='HH_Vacancies',
-        user='postgres',
-        password='qwertyuiop123#'
+        host=host,
+        database=database,
+        user=user,
+        password=password
 ) as conn:
     with conn.cursor() as cur:
         cur.execute("""
