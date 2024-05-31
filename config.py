@@ -1,6 +1,5 @@
-import os
+host = "127.0.0.1"
+database = "HH_Vacancies"
+user = "postgres"
+password = "qwertyuiop123#"
 
-# Абсолютный путь до ROOT_DIR
-ROOT_DIR = os.path.dirname(__file__)
-path_to_file_new = os.path.join(ROOT_DIR, 'data', 'vacancies_all.json')
-path_to_file_update = os.path.join(ROOT_DIR, 'data', 'vacancies_update.json')
