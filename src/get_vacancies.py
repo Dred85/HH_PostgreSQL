@@ -2,10 +2,12 @@ import json
 
 import requests
 
+# Чтение данных из JSON файла companies_id.json c интересующими компаниями
+with open('companies_id.json') as json_file:
+    companies = json.load(json_file)
+
 
 def load_vacancies():
-    with open('companies_id.json') as json_file:
-        companies = json.load(json_file)
     vacancies = []
 
     for company in companies[0].keys():

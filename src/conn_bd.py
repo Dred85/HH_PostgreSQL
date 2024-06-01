@@ -1,11 +1,11 @@
 import json
 import psycopg2
 from config import database, user, password, host
-from src.get_vacancies import load_vacancies
+from src.get_vacancies import load_vacancies, companies
 
 # Чтение данных из JSON файла
-with open('companies_id.json') as json_file:
-    data = json.load(json_file)
+# with open('companies_id.json') as json_file:
+#     data = json.load(json_file)
 
 with psycopg2.connect(
         host=host,
@@ -20,7 +20,7 @@ with psycopg2.connect(
         cur.execute("CREATE TABLE companies (company_id INT PRIMARY KEY, company_name VARCHAR(255) )")
 
         # Добавляем данные из JSON файла в таблицу
-        for company_name, company_id in data[0].items():
+        for company_name, company_id in companies[0].items():
             cur.execute("INSERT INTO companies (company_id, company_name) VALUES (%s, %s)", (company_id, company_name))
 
         # Фиксируем изменения
