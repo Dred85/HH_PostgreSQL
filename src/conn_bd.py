@@ -2,8 +2,6 @@ import psycopg2
 from config import database, user, password, host
 from src.get_vacancies import load_vacancies, companies
 
-
-
 with psycopg2.connect(
         host=host,
         database=database,
