@@ -46,7 +46,7 @@ with psycopg2.connect(
         # Фиксируем изменения
         conn.commit()
 
-        cur.execute("SELECT * FROM vacancies")
+        cur.execute("SELECT * FROM vacancies INNER JOIN companies ON vacancies.company=companies.company_name;")
         rows = cur.fetchall()
         for row in rows:
             print(*row)
@@ -56,6 +56,3 @@ cur.close()
 
 # Закрытие соединения
 conn.close()
-
-
-
