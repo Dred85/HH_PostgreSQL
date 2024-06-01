@@ -2,9 +2,7 @@ import psycopg2
 from config import database, user, password, host
 from src.get_vacancies import load_vacancies, companies
 
-# Чтение данных из JSON файла
-# with open('companies_id.json') as json_file:
-#     data = json.load(json_file)
+# Бери от сюда
 
 with psycopg2.connect(
         host=host,
