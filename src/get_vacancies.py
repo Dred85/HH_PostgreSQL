@@ -49,8 +49,4 @@ if __name__ == "__main__":
     # Загружаем вакансии в JSON файл, для наглядности выгруженных вакансий
     vacancies = load_vacancies()
     print(vacancies)
-    # for vacancy in vacancies_list:
-    #     print(vacancy)
-    #     filename = 'vacancy_json.json'
-    #     with open(filename, 'w', encoding='utf-8') as outfile:
-    #         json.dump(vacancies_list, outfile, ensure_ascii=False, indent=4)
+
