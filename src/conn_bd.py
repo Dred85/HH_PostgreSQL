@@ -9,6 +9,9 @@ with psycopg2.connect(
         password=password
 ) as conn:
     with conn.cursor() as cur:
+        # удаляем таблицу, если она уже существует
+        cur.execute("DROP TABLE IF EXISTS vacancy_table")
+        # создаём в postgres sql таблицу вакансий
         cur.execute("""
                 CREATE TABLE vacancy_table (
                     company varchar (100),
@@ -18,7 +21,7 @@ with psycopg2.connect(
                     salary_to int,
                     description text,
                     requirement text); 
-                    """)  # создаём таблицу sql
+                    """)
         with open('vacancy_json.json', 'r', encoding='utf-8') as file:  # заполняем таблицу данными из созданного json-файла
             vacancies = json.load(file)
             for vacancy in vacancies:
