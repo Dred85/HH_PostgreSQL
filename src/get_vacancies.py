@@ -1,25 +1,16 @@
-
 import json
 
 import requests
 
+# Чтение данных из JSON файла companies_id.json c интересующими компаниями
+with open('companies_id.json') as json_file:
+    companies = json.load(json_file)
+
 
 def load_vacancies():
-    companies = [
-        "АО Уфанет",
-        "Яндекс",
-        "Тинькофф",
-        "Тензор",
-        "Контур",
-        "ASTON",
-        "Sber",
-        "Альфа-Банк",
-        "VK",
-        "ТрансТехСервис"
-    ]
     vacancies = []
 
-    for company in companies:
+    for company in companies[0].keys():
         url = "https://api.hh.ru/vacancies"
         params = {'text': company, 'per_page': 100}
         data = requests.get(url, params=params)
@@ -33,6 +24,10 @@ def load_vacancies():
                 if salary:
                     salary_from = salary.get('from')
                     salary_to = salary.get('to')
+                else:
+                    salary_from = None
+                    salary_to = None
+
                 description = item['snippet']['responsibility']
                 requirement = item['snippet']['requirement']
 
@@ -51,9 +46,11 @@ def load_vacancies():
 
 
 if __name__ == "__main__":
+    # Загружаем вакансии в JSON файл, для наглядности выгруженных вакансий
     vacancies = load_vacancies()
-    for vacancy in vacancies:
-        print(vacancy)
-        filename = 'vacancy_json.json'
-        with open(filename, 'w', encoding='utf-8') as outfile:
-            json.dump(vacancies, outfile, ensure_ascii=False, indent=4)
+    print(vacancies)
+    # for vacancy in vacancies_list:
+    #     print(vacancy)
+    #     filename = 'vacancy_json.json'
+    #     with open(filename, 'w', encoding='utf-8') as outfile:
+    #         json.dump(vacancies_list, outfile, ensure_ascii=False, indent=4)
