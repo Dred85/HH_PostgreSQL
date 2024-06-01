@@ -18,7 +18,7 @@ class DBManager:
         """
         query = """
                 SELECT company, COUNT(*)
-                FROM vacancy_table 
+                FROM vacancies 
                 GROUP BY company
                 """
         self.cur.execute(query)
@@ -30,7 +30,7 @@ class DBManager:
         """
         query = """
                 SELECT company, job_title, salary_from, link_to_vacancy
-                FROM vacancy_table
+                FROM vacancies
                 """
         self.cur.execute(query)
         return self.cur.fetchall()
@@ -42,7 +42,7 @@ class DBManager:
         """
         query = """
                 SELECT AVG(salary_from)
-                FROM vacancy_table
+                FROM vacancies
                 """
         self.cur.execute(query)
         result = self.cur.fetchone()
@@ -55,7 +55,7 @@ class DBManager:
         """
         query = """
                 SELECT job_title, salary_from
-                FROM vacancy_table
+                FROM vacancies
                 WHERE salary_from > (SELECT AVG(salary_from) FROM vacancy_table)
                 """
         self.cur.execute(query)
@@ -67,7 +67,7 @@ class DBManager:
         :return:
         """
         query = """
-                SELECT * FROM vacancy_table
+                SELECT * FROM vacancies
                 WHERE LOWER(job_title) LIKE %s
                 """
         self.cur.execute(query, ('%' + keyword.lower() + '%',))
