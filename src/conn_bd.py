@@ -2,7 +2,6 @@ import json
 import psycopg2
 from config import database, user, password, host
 
-
 # Чтение данных из JSON файла
 with open('companies_id.json') as json_file:
     data = json.load(json_file)
@@ -17,17 +16,14 @@ with psycopg2.connect(
         # удаляем таблицу vacancy_table, если она уже существует
         cur.execute("DROP TABLE IF EXISTS companies")
         # Создаем таблицу companies, если она не существует
-        cur.execute("CREATE TABLE companies (company_name VARCHAR(255), company_id INT)")
+        cur.execute("CREATE TABLE companies (company_id INT PRIMARY KEY, company_name VARCHAR(255) )")
 
         # Добавляем данные из JSON файла в таблицу
         for company_name, company_id in data[0].items():
-            cur.execute("INSERT INTO companies (company_name, company_id) VALUES (%s, %s)", (company_name, company_id))
+            cur.execute("INSERT INTO companies (company_id, company_name) VALUES (%s, %s)", (company_id, company_name))
 
         # Фиксируем изменения
         conn.commit()
-
-
-
 
         # удаляем таблицу vacancy_table, если она уже существует
         cur.execute("DROP TABLE IF EXISTS vacancy_table")
@@ -42,7 +38,8 @@ with psycopg2.connect(
                     description text,
                     requirement text); 
                     """)
-        with open('vacancy_json.json', 'r', encoding='utf-8') as file:  # заполняем таблицу данными из созданного json-файла
+        with open('vacancy_json.json', 'r',
+                  encoding='utf-8') as file:  # заполняем таблицу данными из созданного json-файла
             vacancies = json.load(file)
             for vacancy in vacancies:
                 cur.execute(
@@ -56,3 +53,9 @@ with psycopg2.connect(
         rows = cur.fetchall()
         for row in rows:
             print(row)
+
+# Закрытие курсора
+cur.close()
+
+# Закрытие соединения
+conn.close()
