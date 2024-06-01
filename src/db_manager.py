@@ -1,4 +1,3 @@
-
 import psycopg2
 
 
@@ -56,7 +55,7 @@ class DBManager:
         query = """
                 SELECT job_title, salary_from
                 FROM vacancies
-                WHERE salary_from > (SELECT AVG(salary_from) FROM vacancy_table)
+                WHERE salary_from > (SELECT AVG(salary_from) FROM vacancies)
                 """
         self.cur.execute(query)
         return self.cur.fetchall()
