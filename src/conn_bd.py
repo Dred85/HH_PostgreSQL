@@ -41,7 +41,6 @@ with psycopg2.connect(
                     """)
         # Добавляем данные о вакансиях в переменную vacancies_list и на её основе добавляем записи в  таблицу vacancies
         vacancies_list = load_vacancies()
-        print(vacancies_list)
         for vacancy in vacancies_list:
             cur.execute(
                 'INSERT INTO vacancies (company, job_title, link_to_vacancy, salary_from, salary_to, '
