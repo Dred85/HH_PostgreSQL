@@ -1,6 +1,7 @@
 import json
 import psycopg2
 from config import database, user, password, host
+from src.get_vacancies import load_vacancies
 
 # Чтение данных из JSON файла
 with open('companies_id.json') as json_file:
@@ -13,7 +14,7 @@ with psycopg2.connect(
         password=password
 ) as conn:
     with conn.cursor() as cur:
-        # удаляем таблицу vacancy_table, если она уже существует
+        # удаляем таблицу companies, если она уже существует
         cur.execute("DROP TABLE IF EXISTS companies")
         # Создаем таблицу companies, если она не существует
         cur.execute("CREATE TABLE companies (company_id INT PRIMARY KEY, company_name VARCHAR(255) )")
@@ -25,11 +26,11 @@ with psycopg2.connect(
         # Фиксируем изменения
         conn.commit()
 
-        # удаляем таблицу vacancy_table, если она уже существует
-        cur.execute("DROP TABLE IF EXISTS vacancy_table")
+        # удаляем таблицу vacancies, если она уже существует
+        cur.execute("DROP TABLE IF EXISTS vacancies")
         # создаём в postgres sql таблицу вакансий
         cur.execute("""
-                CREATE TABLE vacancy_table (
+                CREATE TABLE vacancies (
                     company varchar (100),
                     job_title varchar(100),
                     link_to_vacancy varchar(100),
@@ -38,18 +39,20 @@ with psycopg2.connect(
                     description text,
                     requirement text); 
                     """)
-        with open('vacancy_json.json', 'r',
-                  encoding='utf-8') as file:  # заполняем таблицу данными из созданного json-файла
-            vacancies = json.load(file)
-            for vacancy in vacancies:
-                cur.execute(
-                    'INSERT INTO vacancy_table (company, job_title, link_to_vacancy, salary_from, salary_to, '
-                    'description, requirement) VALUES (%s, %s, %s, %s, %s, %s, %s)',
-                    (vacancy.get('company'), vacancy.get('job_title'), vacancy.get('link_to_vacancy'),
-                     vacancy.get('salary_from'), vacancy.get('salary_to'), vacancy.get('description'),
-                     vacancy.get('requirement')))
+        # Добавляем данные о вакансиях в переменную vacancies_list и на её основе добавляем записи в  таблицу vacancies
+        vacancies_list = load_vacancies()
+        print(vacancies_list)
+        for vacancy in vacancies_list:
+            cur.execute(
+                'INSERT INTO vacancies (company, job_title, link_to_vacancy, salary_from, salary_to, '
+                'description, requirement) VALUES (%s, %s, %s, %s, %s, %s, %s)',
+                (vacancy.get('company'), vacancy.get('job_title'), vacancy.get('link_to_vacancy'),
+                 vacancy.get('salary_from'), vacancy.get('salary_to'), vacancy.get('description'),
+                 vacancy.get('requirement')))
+        # Фиксируем изменения
+        conn.commit()
 
-        cur.execute("SELECT * FROM vacancy_table")
+        cur.execute("SELECT * FROM vacancies")
         rows = cur.fetchall()
         for row in rows:
             print(row)
