@@ -1,6 +1,6 @@
-from db_manager import DBManager
+from src.db_manager import DBManager
 from src.config import config
-from utils import create_db
+from src.utils import create_db
 
 
 def main():
