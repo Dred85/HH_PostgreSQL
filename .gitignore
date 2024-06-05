@@ -1,5 +1,5 @@
 # Byte-compiled / optimized / DLL files
-
+src/database.ini
 .idea
 *.py[cod]
 *$py.class

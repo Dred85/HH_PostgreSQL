@@ -2,12 +2,13 @@ import psycopg2
 
 
 class DBManager:
-    def __init__(self, database, user, password, host):
+    def __init__(self, database, user, password, port, host):
         self.database = database
         self.user = user
         self.password = password
+        self.port = port
         self.host = host
-        self.conn = psycopg2.connect(database=self.database, user=user, password=password, host=host)
+        self.conn = psycopg2.connect(database=self.database, user=user, password=password, host=host, port=port)
         self.cur = self.conn.cursor()
 
     def get_companies_and_vacancies_count(self):
@@ -72,6 +73,4 @@ class DBManager:
         self.cur.execute(query, ('%' + keyword.lower() + '%',))
         return self.cur.fetchall()
 
-    # def close_connection(self):
-    #     self.cur.close()
-    #     self.conn.close()
+
