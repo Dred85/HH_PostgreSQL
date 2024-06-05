@@ -3,7 +3,7 @@ import json
 import requests
 
 # Чтение данных из JSON файла companies_id.json c интересующими компаниями
-with open('companies_id.json') as json_file:
+with open('../data/companies_id.json') as json_file:
     companies = json.load(json_file)
 
 
@@ -48,6 +48,6 @@ def load_vacancies():
 
 # Загружаем вакансии в JSON файл, для наглядности выгруженных вакансий
 vacancies = load_vacancies()
-with open('vacancies.json', 'w') as file:
+with open('../data/vacancies.json', 'w') as file:
     json.dump(vacancies, file, ensure_ascii=False, indent=4)
 
