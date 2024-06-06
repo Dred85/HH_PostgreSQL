@@ -2,8 +2,10 @@ import json
 
 import requests
 
+from config_root import path_to_file_vacancies, path_to_file_companies_id
+
 # Чтение данных из JSON файла companies_id.json c интересующими компаниями
-with open('../data/companies_id.json') as json_file:
+with open(path_to_file_companies_id) as json_file:
     companies = json.load(json_file)
 
 
@@ -48,6 +50,6 @@ def load_vacancies():
 
 # Загружаем вакансии в JSON файл, для наглядности выгруженных вакансий
 vacancies = load_vacancies()
-with open('../data/vacancies.json', 'w') as file:
+with open(path_to_file_vacancies, 'w') as file:
     json.dump(vacancies, file, ensure_ascii=False, indent=4)
 

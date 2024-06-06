@@ -1,4 +1,4 @@
-from src.config import config
+from config import config
 import psycopg2
 from src.get_vacancies import load_vacancies, companies
 

@@ -1,5 +1,5 @@
 from src.db_manager import DBManager
-from src.config import config
+from config import config
 from src.utils import create_db
 
 
