@@ -8,7 +8,7 @@ class DBManager:
         self.password = password
         self.port = port
         self.host = host
-        self.conn = psycopg2.connect(database=self.database, user=user, password=password, host=host, port=port)
+        self.conn = psycopg2.connect(database=database, user=user, password=password, host=host, port=port)
         self.cur = self.conn.cursor()
 
     def get_companies_and_vacancies_count(self):

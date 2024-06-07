@@ -10,7 +10,7 @@ def create_db(database_name, params):
     cur.execute(f"DROP DATABASE IF EXISTS {database_name}")
     cur.execute(f"CREATE DATABASE {database_name}")
 
-    conn.close()
+    # conn.close()
 
     with psycopg2.connect(dbname=database_name, **params) as conn:
         with conn.cursor() as cur:
