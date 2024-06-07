@@ -1,11 +1,9 @@
-from config import config
 import psycopg2
 from src.get_vacancies import load_vacancies, companies
 
 
-params = config()
 def create_db(database_name, params):
-    conn = psycopg2.connect(dbname='postgres', **params)
+    conn = psycopg2.connect(dbname="postgres", **params)
     conn.autocommit = True
     cur = conn.cursor()
 
@@ -14,10 +12,7 @@ def create_db(database_name, params):
 
     conn.close()
 
-    conn = psycopg2.connect(dbname=database_name, **params)
-    with psycopg2.connect(
-        **params
-    ) as conn:
+    with psycopg2.connect(dbname=database_name, **params) as conn:
         with conn.cursor() as cur:
             # удаляем таблицу companies, если она уже существует
             cur.execute("DROP TABLE IF EXISTS companies")

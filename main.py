@@ -7,9 +7,9 @@ def main():
     # Получаем параметры подключения к базе данных из файла database.ini
     params = config()
     # Создаем таблицы companies и vacancies
-    create_db("HH_vacans", params)
+    create_db("HH_vacansies", params)
     # Создаем экземпляр класса DBManager
-    db_manager = DBManager("HH_vacans", **params)
+    db_manager = DBManager("HH_vacansies", **params)
     while True:
         print(f'''Запрос к базе данных: 
                   1  Список всех компаний и количество вакансий у каждой компании
