@@ -3,14 +3,18 @@ from src.get_vacancies import load_vacancies, companies
 
 
 def create_db(database_name, params):
+    # Подключаемся к базе данных
     conn = psycopg2.connect(dbname="postgres", **params)
+    # Устанавливаем autocommit, чтобы изменения сохранялись сразу же
     conn.autocommit = True
+    # Получаем курсор
     cur = conn.cursor()
-
+    # Удаляем базу данных, если она уже существует
     cur.execute(f"DROP DATABASE IF EXISTS {database_name}")
+    #  Создаем базу данных
     cur.execute(f"CREATE DATABASE {database_name}")
 
-    # conn.close()
+    conn.close()
 
     with psycopg2.connect(dbname=database_name, **params) as conn:
         with conn.cursor() as cur:
