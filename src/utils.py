@@ -10,9 +10,9 @@ def create_db(database_name, params):
     # Получаем курсор
     cur = conn.cursor()
     # Удаляем базу данных, если она уже существует
-    cur.execute(f"DROP DATABASE IF EXISTS {database_name}")
+    cur.execute(f'DROP DATABASE IF EXISTS "{database_name}";')
     #  Создаем базу данных
-    cur.execute(f"CREATE DATABASE {database_name}")
+    cur.execute(f'CREATE DATABASE "{database_name}";')
 
     conn.close()
 
@@ -21,7 +21,7 @@ def create_db(database_name, params):
             # удаляем таблицу companies, если она уже существует
             cur.execute("DROP TABLE IF EXISTS companies")
             # Создаем таблицу companies, если она не существует
-            cur.execute("CREATE TABLE companies (company_id INT PRIMARY KEY, company_name VARCHAR(255) )")
+            cur.execute("CREATE TABLE companies (company_id INT PRIMARY KEY, company_name VARCHAR(255))")
 
             # Добавляем данные из JSON файла в таблицу
             for company_name, company_id in companies[0].items():
